@@ -47,7 +47,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/tv_email"
+        android:id="@+id/et_email"
         android:layout_width="282dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <EditText
-        android:id="@+id/tv_katasandi"
+        android:id="@+id/et_katasandi"
         android:layout_width="282dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext_shape"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_email"
         app:layout_constraintVertical_bias="0.087" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_katasandi"
+        app:layout_constraintTop_toBottomOf="@+id/et_katasandi"
         app:layout_constraintVertical_bias="0.305" />
 
     <androidx.appcompat.widget.AppCompatButton

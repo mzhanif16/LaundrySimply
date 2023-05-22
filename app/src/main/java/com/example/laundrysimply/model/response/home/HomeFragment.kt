@@ -1,4 +1,4 @@
-package com.example.laundrysimply.ui.home
+package com.example.laundrysimply.model.response.home
 
 import android.content.Intent
 import android.os.Bundle
