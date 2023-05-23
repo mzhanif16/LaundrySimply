@@ -1,17 +1,17 @@
-package com.example.laundrysimply.model.response.home
+package com.example.laundrysimply.ui.home
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import com.example.laundrysimply.base.BasePresenter
 import com.example.laundrysimply.base.BaseView
+import com.example.laundrysimply.model.response.home.HomeResponse
 import com.example.laundrysimply.model.response.login.LoginResponse
 
 interface HomeContract {
     interface View: BaseView {
-        fun onLoginSuccess(loginResponse: LoginResponse)
-        fun onLoginFailed(message:String)
+        fun onHomeSuccess(homeResponse: HomeResponse)
+        fun onHomeFailed(message:String)
     }
 
     interface Presenter : HomeContract, BasePresenter {
-        fun submitLogin(email: String, password: String)
+        fun getHome()
     }
 }

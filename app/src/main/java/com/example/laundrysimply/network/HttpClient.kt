@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class HttpClient {
-    private val BASE_URL = "https://9506-180-252-81-200.ngrok-free.app/"
+    private val BASE_URL = "https://mzhanif16.my.id/"
     private var client: Retrofit? = null
     private var endpoint:Endpoint? = null
 
@@ -44,7 +44,7 @@ class HttpClient {
         builder.connectTimeout(2,TimeUnit.MINUTES)
         builder.readTimeout(2,TimeUnit.MINUTES)
 
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             var interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             builder.addInterceptor(interceptor)

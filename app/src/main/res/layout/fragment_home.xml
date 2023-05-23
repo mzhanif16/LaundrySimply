@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/krem"
-    tools:context=".model.response.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment">
 
     <ImageView
         android:id="@+id/imageView7"
@@ -156,7 +156,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_nama_outlet"
+                android:id="@+id/tv_oulet_sukmajaya"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -167,7 +167,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
             <TextView
-                android:id="@+id/tv_alamat_outlet"
+                android:id="@+id/tv_alamat_outlet2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -175,7 +175,7 @@
                 android:text="Jalan Proklamasi Raya, Kel  Abadijaya, Depok"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nama_outlet" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_oulet_sukmajaya" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -218,7 +218,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
             <TextView
-                android:id="@+id/tv_alamat_outlet2"
+                android:id="@+id/tv_alamat_outlet3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
