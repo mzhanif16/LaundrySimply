@@ -1,4 +1,4 @@
-package com.example.laundrysimply.signin
+package com.example.laundrysimply.ui.signin
 
 import android.app.Dialog
 import android.content.Intent
@@ -10,7 +10,7 @@ import com.example.laundrysimply.MainActivity
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.ActivitySignInBinding
 import com.example.laundrysimply.model.response.login.LoginResponse
-import com.example.laundrysimply.signup.SignUpActivity
+import com.example.laundrysimply.ui.signup.SignUpActivity
 import com.google.gson.Gson
 
 class SignInActivity : AppCompatActivity(), SignContract.View {

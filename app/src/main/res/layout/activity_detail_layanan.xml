@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/krem"
-    tools:context=".layanan.DetailLayananActivity">
+    tools:context=".ui.layanan.DetailLayananActivity">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="455dp"
-        android:layout_height="779dp"
-        android:src="@drawable/grup3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView7"-->
+<!--        android:layout_width="455dp"-->
+<!--        android:layout_height="779dp"-->
+<!--        android:src="@drawable/grup3"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.5" />-->
 
     <TextView
         android:id="@+id/textView11"
@@ -52,11 +52,38 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         tools:listitem="@layout/item_row_layanan_detail" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Total Bayar"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
+        app:layout_constraintVertical_bias="0.529" />
+
+    <TextView
+        android:id="@+id/tv_total_bayar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Rp 100.000"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
+        app:layout_constraintVertical_bias="0.529" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_lanjut"
         android:layout_width="282dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/button_shape_red"
         android:fontFamily="@font/poppins_medium"
         android:text="Lanjut"
@@ -65,6 +92,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_layanan" />
 

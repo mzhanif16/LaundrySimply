@@ -21,7 +21,7 @@
             android:name=".PilihWaktuActivity"
             android:exported="false" />
         <activity
-            android:name=".layanan.DetailLayananActivity"
+            android:name=".ui.layanan.DetailLayananActivity"
             android:exported="false" />
         <activity
             android:name=".DetailCucianActivity"
@@ -31,10 +31,10 @@
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".signin.SignInActivity"
+            android:name=".ui.signin.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".OnBoardScreenActivity"

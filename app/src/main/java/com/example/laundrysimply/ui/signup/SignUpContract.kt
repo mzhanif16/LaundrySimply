@@ -1,4 +1,4 @@
-package com.example.laundrysimply.signup
+package com.example.laundrysimply.ui.signup
 
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Email

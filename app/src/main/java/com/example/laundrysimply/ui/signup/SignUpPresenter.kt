@@ -1,4 +1,4 @@
-package com.example.laundrysimply.signup
+package com.example.laundrysimply.ui.signup
 
 import android.net.Uri
 import android.provider.MediaStore.Audio.Media
@@ -13,7 +13,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class SignUpPresenter(private val view:SignUpContract.View): SignUpContract.Presenter {
+class SignUpPresenter(private val view: SignUpContract.View): SignUpContract.Presenter {
 
     private val mCompositeDisposable : CompositeDisposable?
     init {
