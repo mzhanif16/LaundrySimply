@@ -1,5 +1,7 @@
 package com.example.laundrysimply.ui.layanan
 
+import LayananAdapter
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -15,8 +17,7 @@ import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.ActivityDetailLayananBinding
 import com.example.laundrysimply.model.response.layanan.Data
 import com.example.laundrysimply.model.response.layanan.LayananResponse
-import com.mcdev.quantitizerlibrary.HorizontalQuantitizer
-import com.mcdev.quantitizerlibrary.QuantitizerListener
+import com.example.laundrysimply.utils.Helpers.formatPrice
 
 class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCallback,
     LayananContract.View {
@@ -25,6 +26,8 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
     private lateinit var presenter: LayananPresenter
     var progressDialog : Dialog? = null
     private var outletId: Int =0
+    private var totalKuantitas: Int = 0
+    private var totalBayar: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailLayananBinding.inflate(layoutInflater)
@@ -41,11 +44,6 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
         }
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
-
-    }
-
     private fun initView() {
         progressDialog = Dialog(this)
         val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
@@ -57,21 +55,19 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
         }
     }
 
-//    fun initDataDummy(){
-//        layananList = ArrayList()
-//        layananList.add(LayananModel("Cuci Setrika","9500"))
-//        layananList.add(LayananModel("Cuci","8000"))
-//        layananList.add(LayananModel("Cuci Kering","7500"))
-//
-//    }
-
     override fun onClick(v: View, data: Data) {
 
     }
 
     override fun onLayananSuccess(layananResponse: LayananResponse) {
         val filteredLayanan = layananResponse.data.filter { it.outletId == outletId }
-        var adapter = LayananAdapter(filteredLayanan,this, outletId)
+        layananList.addAll(filteredLayanan)
+        var adapter = LayananAdapter(
+            layananList,
+            this,
+            outletId,
+            this::onTotalKuantitasUpdated,
+            this::onTotalBayarUpdated)
         var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         binding.rvLayanan.layoutManager= layoutManager
         binding.rvLayanan.adapter = adapter
@@ -87,5 +83,14 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
+    }
+    private fun onTotalKuantitasUpdated(total: Int) {
+        totalKuantitas = total
+        binding.tvTotalKuantitas.text = total.toString()
+    }
+
+    private fun onTotalBayarUpdated(total: Int) {
+        totalBayar = total
+        binding.tvTotalBayar2.formatPrice(total.toString())
     }
 }

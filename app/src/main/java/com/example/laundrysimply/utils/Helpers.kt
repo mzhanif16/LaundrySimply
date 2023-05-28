@@ -13,7 +13,7 @@ object Helpers {
     }
 
     fun getCurrencyIDR (harga : Double) : String {
-        val format = DecimalFormat("#,##,###")
+        val format = DecimalFormat("##,###")
         return "Rp " +format.format(harga).replace(",".toRegex(),".")
     }
 

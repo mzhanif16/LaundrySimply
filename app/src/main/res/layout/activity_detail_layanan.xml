@@ -7,17 +7,17 @@
     android:background="@color/krem"
     tools:context=".ui.layanan.DetailLayananActivity">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView7"-->
-<!--        android:layout_width="455dp"-->
-<!--        android:layout_height="779dp"-->
-<!--        android:src="@drawable/grup3"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.5" />-->
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="455dp"
+        android:layout_height="779dp"
+        android:src="@drawable/grup3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/textView11"
@@ -53,6 +53,35 @@
         tools:listitem="@layout/item_row_layanan_detail" />
 
     <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Total Layanan"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan" />
+
+    <TextView
+        android:id="@+id/tv_total_bayar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="total bayar"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
+        app:layout_constraintVertical_bias="0.83" />
+
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -62,28 +91,28 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
-        android:id="@+id/tv_total_bayar2"
+        android:id="@+id/tv_total_kuantitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="18dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Rp 100.000"
+        android:hint="total kuantitas"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_lanjut"
         android:layout_width="282dp"
         android:layout_height="48dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/button_shape_red"
         android:fontFamily="@font/poppins_medium"
         android:text="Lanjut"

@@ -27,7 +27,17 @@
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nama_layanan_detail" />\
+        app:layout_constraintTop_toBottomOf="@+id/tv_nama_layanan_detail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="/kg "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_harga_layanan_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nama_layanan_detail" />
 
     <com.mcdev.quantitizerlibrary.HorizontalQuantitizer
         android:id="@+id/hq1"
