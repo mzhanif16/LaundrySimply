@@ -8,11 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.laundrysimply.DetailCucianActivity
+import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
-import com.example.laundrysimply.layanan.DetailLayananActivity
+import com.example.laundrysimply.ui.layanan.DetailLayananActivity
 import com.example.laundrysimply.databinding.FragmentHomeBinding
+import com.example.laundrysimply.model.response.home.Data
 import com.example.laundrysimply.model.response.home.HomeResponse
+import com.example.laundrysimply.model.response.login.LoginResponse
+import com.example.laundrysimply.model.response.login.User
+import com.example.laundrysimply.ui.signin.SignContract
+import com.example.laundrysimply.ui.signin.SigninPresenter
+import com.google.gson.Gson
 
 class HomeFragment : Fragment() , HomeContract.View{
 
@@ -39,15 +47,15 @@ class HomeFragment : Fragment() , HomeContract.View{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.cv1.setOnClickListener {
-            val intent = Intent(requireActivity(), DetailCucianActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.cv2.setOnClickListener {
-            val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cv1.setOnClickListener {
+//            val intent = Intent(requireActivity(), DetailCucianActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.cv2.setOnClickListener {
+//           val intent = Intent(requireActivity(), DetailLayananActivity::class.java).putExtra("data",homeResponse.data[0].nama)
+//            startActivity(intent)
+//        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,6 +73,14 @@ class HomeFragment : Fragment() , HomeContract.View{
             it.setContentView(dialogLayout)
             it.setCancelable(false)
             it.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+        var user = LaundrySimply.getApp().getUser()
+        var userResponse = Gson().fromJson(user,User::class.java)
+        binding.tvNamauser.setText(userResponse.name)
+        if(!userResponse.profile_photo_url.isNullOrEmpty()){
+            Glide.with(requireActivity())
+                .load(userResponse.profile_photo_path)
+                .into(binding.imageView5)
         }
     }
 
@@ -87,6 +103,27 @@ class HomeFragment : Fragment() , HomeContract.View{
         binding.tvAlamatOutlet2.setText(homeResponse.data[1].address)
         binding.tvOutletCilodong.setText(homeResponse.data[2].nama)
         binding.tvAlamatOutlet3.setText(homeResponse.data[2].address)
+
+        binding.cv1.setOnClickListener {
+            val outletId = homeResponse.data[0].id// Mengambil outlet_id dari homeResponse
+            val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
+            intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            startActivity(intent)
+        }
+
+        binding.cv2.setOnClickListener {
+            val outletId = homeResponse.data[1].id// Mengambil outlet_id dari homeResponse
+            val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
+            intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            startActivity(intent)
+        }
+
+        binding.cv3.setOnClickListener {
+            val outletId = homeResponse.data[2].id// Mengambil outlet_id dari homeResponse
+            val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
+            intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            startActivity(intent)
+        }
     }
 
     override fun onHomeFailed(message: String) {

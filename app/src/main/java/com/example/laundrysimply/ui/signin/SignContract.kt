@@ -1,4 +1,4 @@
-package com.example.laundrysimply.signin
+package com.example.laundrysimply.ui.signin
 
 import android.provider.ContactsContract.CommonDataKinds.Email
 import com.example.laundrysimply.base.BasePresenter

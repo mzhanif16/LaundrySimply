@@ -22,7 +22,7 @@ data class Data(
     val keterangan: String,
     @Expose
     @SerializedName("layanan_id")
-    val layananId: Int,
+    val layananId: String,
     @Expose
     @SerializedName("nama")
     val nama: String,

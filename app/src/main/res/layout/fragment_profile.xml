@@ -8,7 +8,6 @@
     tools:context=".ui.profile.ProfileFragment">
 
     <ImageView
-        android:id="@+id/iv_logout"
         android:layout_width="455dp"
         android:layout_height="779dp"
         android:src="@drawable/grup3"
@@ -121,18 +120,25 @@
         android:background="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_simpan"
-        app:layout_constraintVertical_bias="0.377"
+        app:layout_constraintVertical_bias="0.154"
         tools:layout_editor_absoluteX="0dp" />
 
-    <ImageButton
+    <TextView
         android:id="@+id/ib_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="240dp"
         android:layout_marginTop="16dp"
         android:background="@color/krem"
-        android:src="@drawable/logout"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Logout"
+        android:drawablePadding="6dp"
+        android:drawableRight="@drawable/baseline_logout_24"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

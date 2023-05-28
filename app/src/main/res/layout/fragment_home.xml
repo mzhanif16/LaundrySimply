@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Hanif"
+        android:text="Hanif2"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"

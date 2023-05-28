@@ -42,7 +42,7 @@ class LaundrySimply : MultiDexApplication() {
         return getPreferences().getString("PREFERENCES_USER",null)
     }
 
-    fun removeToken(){
-        PreferenceManager.getDefaultSharedPreferences(this).edit().remove("PREFERENCES_TOKEN").apply()
+    fun removeToken() {
+        getPreferences().edit().remove("PREFERENCES_TOKEN").apply()
     }
 }

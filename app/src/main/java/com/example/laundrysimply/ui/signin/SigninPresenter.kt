@@ -1,11 +1,11 @@
-package com.example.laundrysimply.signin
+package com.example.laundrysimply.ui.signin
 
 import com.example.laundrysimply.network.HttpClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SigninPresenter(private val view:SignContract.View): SignContract.Presenter {
+class SigninPresenter(private val view: SignContract.View): SignContract.Presenter {
 
     private val mCompositeDisposable : CompositeDisposable?
     init {

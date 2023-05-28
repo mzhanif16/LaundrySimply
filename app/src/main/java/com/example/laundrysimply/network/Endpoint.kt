@@ -1,10 +1,11 @@
 package com.example.laundrysimply.network
 
 
-import android.media.Image
 import com.example.laundrysimply.model.response.Wrapper
 import com.example.laundrysimply.model.response.home.HomeResponse
+import com.example.laundrysimply.model.response.layanan.LayananResponse
 import com.example.laundrysimply.model.response.login.LoginResponse
+import com.example.laundrysimply.model.response.logout.LogoutResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.http.*
@@ -31,4 +32,10 @@ interface Endpoint {
 
     @GET("outlet")
     fun home() : Observable<Wrapper<HomeResponse>>
+
+    @GET("layanan")
+    fun layanan() : Observable<Wrapper<LayananResponse>>
+
+    @POST("logout")
+    fun logout(@Header("Authorization")accessToken: String): Observable<LogoutResponse>
 }

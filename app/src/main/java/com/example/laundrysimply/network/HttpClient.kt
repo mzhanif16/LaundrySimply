@@ -44,11 +44,10 @@ class HttpClient {
         builder.connectTimeout(2,TimeUnit.MINUTES)
         builder.readTimeout(2,TimeUnit.MINUTES)
 
-        if (BuildConfig.DEBUG) {
+
             var interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             builder.addInterceptor(interceptor)
-        }
 
         if(token!=null){
             builder.addInterceptor(getInterceptorWithHeader("Authorization", "Bearer ${token}"))
