@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laundrysimply.R
 import com.example.laundrysimply.model.response.layanan.Data
+import com.example.laundrysimply.model.response.layanan.LayananItem
 import com.example.laundrysimply.utils.Helpers.formatPrice
 import com.mcdev.quantitizerlibrary.HorizontalQuantitizer
 import com.mcdev.quantitizerlibrary.QuantitizerListener

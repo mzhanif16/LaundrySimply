@@ -84,13 +84,6 @@ class HomeFragment : Fragment() , HomeContract.View{
         }
     }
 
-//    private fun pindahActivity(){
-//        binding.cv1.setOnClickListener {
-//            val intent = Intent(activity, SignInActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -105,23 +98,35 @@ class HomeFragment : Fragment() , HomeContract.View{
         binding.tvAlamatOutlet3.setText(homeResponse.data[2].address)
 
         binding.cv1.setOnClickListener {
-            val outletId = homeResponse.data[0].id// Mengambil outlet_id dari homeResponse
+            val outletId = homeResponse.data[0].id // Mengambil outlet_id dari homeResponse
+            val outletNama = homeResponse.data[0].nama
+            val outletAlamat = homeResponse.data[0].address
             val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
             intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            intent.putExtra("outlet_nama", outletNama)
+            intent.putExtra("outlet_alamat", outletAlamat)
             startActivity(intent)
         }
 
         binding.cv2.setOnClickListener {
             val outletId = homeResponse.data[1].id// Mengambil outlet_id dari homeResponse
+            val outletNama = homeResponse.data[1].nama
+            val outletAlamat = homeResponse.data[1].address
             val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
             intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            intent.putExtra("outlet_nama", outletNama)
+            intent.putExtra("outlet_alamat", outletAlamat)
             startActivity(intent)
         }
 
         binding.cv3.setOnClickListener {
             val outletId = homeResponse.data[2].id// Mengambil outlet_id dari homeResponse
+            val outletNama = homeResponse.data[2].nama
+            val outletAlamat = homeResponse.data[2].address
             val intent = Intent(requireActivity(), DetailLayananActivity::class.java)
             intent.putExtra("outlet_id", outletId) // Menyimpan outlet_id dalam intent
+            intent.putExtra("outlet_nama", outletNama)
+            intent.putExtra("outlet_alamat", outletAlamat)
             startActivity(intent)
         }
     }

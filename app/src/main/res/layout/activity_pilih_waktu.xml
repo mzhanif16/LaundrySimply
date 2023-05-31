@@ -7,18 +7,49 @@
     android:background="@color/krem"
     tools:context=".PilihWaktuActivity">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="455dp"
-        android:layout_height="779dp"
-        android:src="@drawable/grup3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
 
+    <TextView
+        android:id="@+id/kuantitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="kuantitas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
+
+    <TextView
+        android:id="@+id/bayar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="52dp"
+        android:text="kuantitas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView7"-->
+<!--        android:layout_width="455dp"-->
+<!--        android:layout_height="779dp"-->
+<!--        android:src="@drawable/grup3"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.5" />-->
+
+
+    <TextView
+        android:id="@+id/nama_layanan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="76dp"
+        android:text="kuantitas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
 
     <TextView
         android:id="@+id/textView11"
@@ -61,9 +92,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:maxEms="12"
         android:fontFamily="@font/poppins_medium"
         android:text="Jalan Nenas 6 No.121 Pancoran Mas, Depok"
         android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -73,6 +108,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:editable="false"
         android:background="@drawable/edittext_shape"
         android:hint="Pilih Tanggal PickUp"
         android:padding="16dp"
@@ -95,6 +131,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:editable="false"
         android:background="@drawable/edittext_shape"
         android:hint="Pilih Tanggal Delivery"
         android:padding="16dp"

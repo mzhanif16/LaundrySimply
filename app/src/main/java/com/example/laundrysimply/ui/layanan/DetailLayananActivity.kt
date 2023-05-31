@@ -16,6 +16,7 @@ import com.example.laundrysimply.PilihWaktuActivity
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.ActivityDetailLayananBinding
 import com.example.laundrysimply.model.response.layanan.Data
+import com.example.laundrysimply.model.response.layanan.LayananItem
 import com.example.laundrysimply.model.response.layanan.LayananResponse
 import com.example.laundrysimply.utils.Helpers.formatPrice
 
@@ -28,6 +29,8 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
     private var outletId: Int =0
     private var totalKuantitas: Int = 0
     private var totalBayar: Int = 0
+    private var outletNama: String = ""
+    private var outletAlamat: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailLayananBinding.inflate(layoutInflater)
@@ -35,13 +38,23 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
         setContentView(view)
         initView()
         outletId = intent.getIntExtra("outlet_id",0)
+        outletNama = intent.getStringExtra("outlet_nama") ?: ""
+        outletAlamat = intent.getStringExtra("outlet_alamat") ?: ""
         presenter = LayananPresenter(this)
         presenter.getLayanan(outletId)
 
         binding.btnLanjut.setOnClickListener {
             val intent = Intent(this, PilihWaktuActivity::class.java)
+            val bundle = Bundle()
+            bundle.putInt("total_kuantitas", totalKuantitas)
+            bundle.putInt("total_bayar", totalBayar)
+            bundle.putString("outlet_nama", outletNama)
+            bundle.putString("outlet_alamat", outletAlamat)
+            intent.putExtras(bundle)
             startActivity(intent)
         }
+        binding.tvOutletNama.text = outletNama
+        binding.tvOutletAlamat.text = outletAlamat
     }
 
     private fun initView() {
@@ -56,7 +69,6 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
     }
 
     override fun onClick(v: View, data: Data) {
-
     }
 
     override fun onLayananSuccess(layananResponse: LayananResponse) {
