@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laundrysimply.R
 import com.example.laundrysimply.model.response.layanan.Data
-import com.example.laundrysimply.model.response.layanan.LayananItem
 import com.example.laundrysimply.utils.Helpers.formatPrice
 import com.mcdev.quantitizerlibrary.HorizontalQuantitizer
 import com.mcdev.quantitizerlibrary.QuantitizerListener
@@ -35,7 +34,7 @@ class LayananAdapter(
         if (data.outletId == outletId) {
             holder.bind(data, itemAdapterCallback)
             holder.updateTotalBayar()
-            holder.updateTotalKuantitas()
+            holder.updateTotalKuantitas(data, itemAdapterCallback)
         } else {
             holder.itemView.visibility = View.GONE
         }
@@ -84,8 +83,9 @@ class LayananAdapter(
                         val currentValue = selectedValues[position] ?: 0
                         if (currentValue > 0) {
                             selectedValues[position] = currentValue
+                            data.kuantitas = currentValue
                             updateTotalBayar()
-                            updateTotalKuantitas()
+                            updateTotalKuantitas(data, itemAdapterCallback)
                         }
                     }
                 }
@@ -96,8 +96,9 @@ class LayananAdapter(
                         val data = listData[position]
                         val currentValue = selectedValues[position] ?: 0
                         selectedValues[position] = currentValue
+                        data.kuantitas = currentValue
                         updateTotalBayar()
-                        updateTotalKuantitas()
+                        updateTotalKuantitas(data, itemAdapterCallback)
                     }
                 }
 
@@ -106,8 +107,9 @@ class LayananAdapter(
                     if (position != RecyclerView.NO_POSITION) {
                         val data = listData[position]
                         selectedValues[position] = value
+                        data.kuantitas = value
                         updateTotalBayar()
-                        updateTotalKuantitas()
+                        updateTotalKuantitas(data, itemAdapterCallback)
                     }
                 }
             })
@@ -123,8 +125,6 @@ class LayananAdapter(
                     val value = selectedValues[position] ?: 0
                     hq.value = value
                 }
-
-                itemView.setOnClickListener { itemAdapterCallback.onClick(it, data) }
             }
         }
 
@@ -132,12 +132,13 @@ class LayananAdapter(
             calculateTotalBayar()
         }
 
-        fun updateTotalKuantitas() {
+        fun updateTotalKuantitas(data: Data, itemAdapterCallback: ItemAdapterCallback) {
             calculateTotalKuantitas()
+            itemAdapterCallback.onClick(data)
         }
     }
 
     interface ItemAdapterCallback {
-        fun onClick(v: View, data: Data)
+        fun onClick(data: Data)
     }
 }

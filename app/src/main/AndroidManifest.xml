@@ -24,7 +24,7 @@
             android:name=".ui.layanan.DetailLayananActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailCucianActivity"
+            android:name=".ui.detailcucian.DetailCucianActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

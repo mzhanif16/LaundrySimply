@@ -42,7 +42,7 @@
         android:text="Alamat"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_outlet_nama" />
@@ -84,27 +84,27 @@
         android:id="@+id/tv_total_bayar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="18dp"
         android:fontFamily="@font/poppins_medium"
         android:hint="total bayar"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/rv_layanan"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_layanan" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Total Bayar"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_lanjut"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -124,6 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/rv_layanan" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:visibility="invisible"
         android:id="@+id/btn_lanjut"
         android:layout_width="282dp"
         android:layout_height="48dp"

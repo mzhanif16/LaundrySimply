@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,30 +23,36 @@ import com.example.laundrysimply.utils.Helpers.formatPrice
 
 class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCallback,
     LayananContract.View {
-    private var layananList : ArrayList<Data> = ArrayList()
+    private var layananList: ArrayList<Data> = ArrayList()
     private lateinit var binding: ActivityDetailLayananBinding
     private lateinit var presenter: LayananPresenter
-    var progressDialog : Dialog? = null
-    private var outletId: Int =0
+    var progressDialog: Dialog? = null
+    private var outletId: Int = 0
     private var totalKuantitas: Int = 0
     private var totalBayar: Int = 0
     private var outletNama: String = ""
     private var outletAlamat: String = ""
+    private var dataA: ArrayList<Data> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailLayananBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         initView()
-        outletId = intent.getIntExtra("outlet_id",0)
+        outletId = intent.getIntExtra("outlet_id", 0)
         outletNama = intent.getStringExtra("outlet_nama") ?: ""
         outletAlamat = intent.getStringExtra("outlet_alamat") ?: ""
         presenter = LayananPresenter(this)
         presenter.getLayanan(outletId)
 
+        val intent = Intent(this, PilihWaktuActivity::class.java)
+        val bundle = Bundle()
+
         binding.btnLanjut.setOnClickListener {
-            val intent = Intent(this, PilihWaktuActivity::class.java)
-            val bundle = Bundle()
+            val data = dataA.filter { it.kuantitas!! > 0 }
+            dataA.clear()
+            dataA.addAll(data)
+            bundle.putParcelableArrayList("data", dataA)
             bundle.putInt("total_kuantitas", totalKuantitas)
             bundle.putInt("total_bayar", totalBayar)
             bundle.putString("outlet_nama", outletNama)
@@ -53,6 +60,7 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
             intent.putExtras(bundle)
             startActivity(intent)
         }
+
         binding.tvOutletNama.text = outletNama
         binding.tvOutletAlamat.text = outletAlamat
     }
@@ -68,8 +76,15 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
         }
     }
 
-    override fun onClick(v: View, data: Data) {
+    override fun onClick(data: Data) {
+        val index = dataA.indexOfFirst { it.id == data.id }
+        if (index != -1) {
+            dataA[index] = data
+        } else {
+            dataA.add(data)
+        }
     }
+
 
     override fun onLayananSuccess(layananResponse: LayananResponse) {
         val filteredLayanan = layananResponse.data.filter { it.outletId == outletId }
@@ -79,14 +94,16 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
             this,
             outletId,
             this::onTotalKuantitasUpdated,
-            this::onTotalBayarUpdated)
-        var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
-        binding.rvLayanan.layoutManager= layoutManager
+            this::onTotalBayarUpdated
+        )
+        var layoutManager: RecyclerView.LayoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvLayanan.layoutManager = layoutManager
         binding.rvLayanan.adapter = adapter
     }
 
     override fun onLayananFailed(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {
@@ -96,13 +113,24 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
     override fun dismissLoading() {
         progressDialog?.dismiss()
     }
+
     private fun onTotalKuantitasUpdated(total: Int) {
         totalKuantitas = total
         binding.tvTotalKuantitas.text = total.toString()
+        checkButtonVisibility()
     }
 
     private fun onTotalBayarUpdated(total: Int) {
         totalBayar = total
         binding.tvTotalBayar2.formatPrice(total.toString())
+        checkButtonVisibility()
+    }
+
+    private fun checkButtonVisibility() {
+        if (totalKuantitas == 0 && totalBayar == 0) {
+            binding.btnLanjut.visibility = View.GONE
+        } else {
+            binding.btnLanjut.visibility = View.VISIBLE
+        }
     }
 }

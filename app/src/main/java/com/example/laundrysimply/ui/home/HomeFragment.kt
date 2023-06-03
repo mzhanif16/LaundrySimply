@@ -9,17 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.laundrysimply.DetailCucianActivity
 import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
 import com.example.laundrysimply.ui.layanan.DetailLayananActivity
 import com.example.laundrysimply.databinding.FragmentHomeBinding
-import com.example.laundrysimply.model.response.home.Data
 import com.example.laundrysimply.model.response.home.HomeResponse
-import com.example.laundrysimply.model.response.login.LoginResponse
 import com.example.laundrysimply.model.response.login.User
-import com.example.laundrysimply.ui.signin.SignContract
-import com.example.laundrysimply.ui.signin.SigninPresenter
 import com.google.gson.Gson
 
 class HomeFragment : Fragment() , HomeContract.View{

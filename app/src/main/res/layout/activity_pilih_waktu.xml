@@ -7,49 +7,17 @@
     android:background="@color/krem"
     tools:context=".PilihWaktuActivity">
 
-
-    <TextView
-        android:id="@+id/kuantitas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:text="kuantitas"
+        <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="455dp"
+        android:layout_height="779dp"
+        android:src="@drawable/grup3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
-
-    <TextView
-        android:id="@+id/bayar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
-        android:text="kuantitas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/imageView7"-->
-<!--        android:layout_width="455dp"-->
-<!--        android:layout_height="779dp"-->
-<!--        android:src="@drawable/grup3"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.5" />-->
-
-
-    <TextView
-        android:id="@+id/nama_layanan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="76dp"
-        android:text="kuantitas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_tanggal_deliv" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/textView11"
