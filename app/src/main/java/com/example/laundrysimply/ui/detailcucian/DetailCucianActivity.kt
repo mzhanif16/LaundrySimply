@@ -1,18 +1,24 @@
 package com.example.laundrysimply.ui.detailcucian
 
+import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laundrysimply.LaundrySimply
+import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.ActivityDetailCucianBinding
+import com.example.laundrysimply.model.response.checkout.CheckOutResponse
 import com.example.laundrysimply.model.response.layanan.Data
 import com.example.laundrysimply.model.response.login.User
 import com.example.laundrysimply.utils.Helpers.formatPrice
 import com.google.gson.Gson
 
-class DetailCucianActivity : AppCompatActivity() {
+class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
     private lateinit var binding: ActivityDetailCucianBinding
     private var totalKuantitas: Int = 0
     private var totalBayar: Int = 0
@@ -21,6 +27,8 @@ class DetailCucianActivity : AppCompatActivity() {
     private lateinit var dataA: ArrayList<Data>
     private var tanggalPickup: String = ""
     private var tanggalDelivery: String = ""
+    lateinit var presenter: PaymentPresenter
+    var progressDialog : Dialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailCucianBinding.inflate(layoutInflater)
@@ -52,12 +60,57 @@ class DetailCucianActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
-        binding.btnLanjut.setOnClickListener {
 
+        initView()
+        presenter = PaymentPresenter(this)
+        val dataIds = dataA.map { data -> data.id }
+        val dataIdsString = dataIds.joinToString(",")
+
+        binding.btnLanjut.setOnClickListener {
+            presenter.CheckOut(
+                dataIdsString,
+                userResponse.id,
+                totalBayar.toString(),
+                totalKuantitas.toString(),
+                tanggalPickup,
+                tanggalDelivery,
+                4,
+                "",
+                binding.cardView
+            )
         }
 
 
         binding.cvRating.visibility = View.INVISIBLE
         binding.cardView.visibility = View.INVISIBLE
+    }
+
+    private fun initView(){
+        progressDialog = Dialog(this)
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
+
+        progressDialog?.let {
+            it.setContentView(dialogLayout)
+            it.setCancelable(false)
+            it.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+    }
+
+    override fun onPaymentSuccess(checkOutResponse: CheckOutResponse, view: View) {
+        val i= Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(checkOutResponse.paymentUrl)
+        startActivity(i)
+    }
+
+    override fun onPaymentFailed(message: String) {
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }
