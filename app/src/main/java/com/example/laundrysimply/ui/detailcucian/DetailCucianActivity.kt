@@ -56,8 +56,7 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         binding.tvTotalBayar.formatPrice(totalBayar.toString())
 
         val adapter = DetailCucianAdapter(dataA)
-        var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL, false)
+        var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
 
@@ -65,6 +64,18 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         presenter = PaymentPresenter(this)
         val dataIds = dataA.map { data -> data.id }
         val dataIdsString = dataIds.joinToString(",")
+//        val gson = Gson()
+//        val dataListA = gson.toJson(dataA)
+//
+//        val dataListA = JSONArray()
+//        for (data in dataA) {
+//            val jsonArray = JSONArray()
+//            jsonArray.put(data.id)
+//            jsonArray.put(data.namaLayanan)
+//            jsonArray.put(data.outletId)
+//            jsonArray.put(data.kuantitas)
+//            dataListA.put(jsonArray)
+//        }
 
         binding.btnLanjut.setOnClickListener {
             presenter.CheckOut(
@@ -74,9 +85,9 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
                 totalKuantitas.toString(),
                 tanggalPickup,
                 tanggalDelivery,
-                4,
+                5,
                 "",
-                binding.cardView
+                it
             )
         }
 

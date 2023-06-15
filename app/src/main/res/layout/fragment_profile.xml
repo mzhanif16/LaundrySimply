@@ -22,9 +22,9 @@
         android:id="@+id/imageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/profil"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -32,12 +32,12 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Profile"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,13 +67,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_nama" />
 
     <EditText
-        android:id="@+id/tv_katasandi"
+        android:id="@+id/tv_notelp"
         android:layout_width="282dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_shape"
-        android:hint="Kata Sandi"
-        android:inputType="textPassword"
+        android:hint="No Telp"
         android:paddingLeft="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -93,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_katasandi" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_notelp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_simpan"
@@ -101,7 +100,7 @@
         android:layout_height="48dp"
         android:background="@drawable/button_shape_red"
         android:fontFamily="@font/poppins_medium"
-        android:text="Simpan"
+        android:text="Edit Profile"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"

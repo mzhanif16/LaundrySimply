@@ -39,20 +39,6 @@ class HomeFragment : Fragment() , HomeContract.View{
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        binding.cv1.setOnClickListener {
-//            val intent = Intent(requireActivity(), DetailCucianActivity::class.java)
-//            startActivity(intent)
-//        }
-//
-//        binding.cv2.setOnClickListener {
-//           val intent = Intent(requireActivity(), DetailLayananActivity::class.java).putExtra("data",homeResponse.data[0].nama)
-//            startActivity(intent)
-//        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initView()

@@ -1,4 +1,5 @@
-package com.example.laundrysimply.model.response.login
+package com.example.laundrysimply.model.response.detailtransaksi
+
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -6,13 +7,13 @@ import com.google.gson.annotations.SerializedName
 data class User(
     @Expose
     @SerializedName("address")
-    val address: Any?,
+    val address: String,
     @Expose
     @SerializedName("created_at")
-    val created_at: Int,
+    val createdAt: Int,
     @Expose
     @SerializedName("current_team_id")
-    val current_team_id: Any,
+    val currentTeamId: Any,
     @Expose
     @SerializedName("email")
     val email: String,
@@ -24,20 +25,20 @@ data class User(
     val name: String,
     @Expose
     @SerializedName("notelp")
-    val notelp: Any,
+    val notelp: String,
     @Expose
     @SerializedName("profile_photo_path")
-    val profile_photo_path: Any,
+    val profilePhotoPath: Any,
     @Expose
     @SerializedName("profile_photo_url")
-    val profile_photo_url: String,
+    val profilePhotoUrl: String,
     @Expose
     @SerializedName("roles")
     val roles: String,
     @Expose
     @SerializedName("two_factor_confirmed_at")
-    val two_factor_confirmed_at: Any,
+    val twoFactorConfirmedAt: Any,
     @Expose
     @SerializedName("updated_at")
-    val updated_at: Int
+    val updatedAt: Int
 )

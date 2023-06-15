@@ -14,17 +14,23 @@ import androidx.appcompat.app.AlertDialog
 import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.FragmentProfileBinding
+import com.example.laundrysimply.model.response.login.User
+import com.example.laundrysimply.model.response.profile.UpdateProfileResponse
 import com.example.laundrysimply.network.Endpoint
 import com.example.laundrysimply.network.HttpClient
 import com.example.laundrysimply.ui.signin.SignInActivity
+import com.example.laundrysimply.ui.signin.SigninPresenter
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), UpdateProfileContract.View {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var endpoint: Endpoint
     private lateinit var laundrysimply: LaundrySimply
+    var progressDialog : Dialog? = null
+    lateinit var presenter: UpdateProfilePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +44,8 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         endpoint = HttpClient.getInstance().getApi() ?: throw IllegalStateException("ApiService is null")
         laundrysimply = LaundrySimply.getApp()
+        presenter = UpdateProfilePresenter(this)
+        initView()
 
         binding.ibLogout.setOnClickListener {
             val accessToken = laundrysimply.getToken()
@@ -56,6 +64,47 @@ class ProfileFragment : Fragment() {
             }
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
+        }
+
+        var user = laundrysimply.getUser()
+        var userResponse = Gson().fromJson(user, User::class.java)
+
+        binding.tvNama.setText(userResponse.name)
+        binding.tvEmail.setText(userResponse.email)
+        binding.tvNotelp.setText(userResponse.notelp.toString())
+        binding.tvAlamat.setText(userResponse.address.toString())
+
+        binding.tvNama.isEnabled = false
+        binding.tvEmail.isEnabled = false
+        binding.tvAlamat.isEnabled = false
+        binding.tvNotelp.isEnabled = false
+
+
+        var isEditMode = false
+
+        binding.btnSimpan.setOnClickListener {
+            if(!isEditMode){
+                isEditMode = true
+                binding.tvNama.isEnabled = true
+                binding.tvEmail.isEnabled = true
+                binding.tvAlamat.isEnabled = true
+                binding.tvNotelp.isEnabled = true
+                binding.btnSimpan.text = "Simpan"
+            }else{
+                isEditMode = false
+                binding.tvNama.isEnabled = false
+                binding.tvEmail.isEnabled = false
+                binding.tvAlamat.isEnabled = false
+                binding.tvNotelp.isEnabled = false
+                binding.btnSimpan.text = "Edit Profile"
+
+                val nama = binding.tvNama.text.toString()
+                val email = binding.tvEmail.text.toString()
+                val alamat = binding.tvAlamat.text.toString()
+                val notelp = binding.tvNotelp.text.toString()
+
+                presenter.updateProfile(nama,email,notelp,alamat)
+            }
         }
     }
 
@@ -80,6 +129,17 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), "Logout Gagal.", Toast.LENGTH_SHORT).show()
                 }
             )
+    }
+
+    private fun initView(){
+        progressDialog = Dialog(requireContext())
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
+
+        progressDialog?.let {
+            it.setContentView(dialogLayout)
+            it.setCancelable(false)
+            it.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
     }
 
     private fun showLogoutSuccessDialog() {
@@ -135,5 +195,21 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onUpdateProfileSuccess(updateProfileResponse: UpdateProfileResponse) {
+            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onUpdateProfieFailed(message: String) {
+        Toast.makeText(context, message,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

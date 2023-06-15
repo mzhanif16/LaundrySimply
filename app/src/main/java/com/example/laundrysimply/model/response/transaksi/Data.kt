@@ -1,10 +1,10 @@
-package com.example.laundrysimply.model.response.checkout
+package com.example.laundrysimply.model.response.transaksi
 
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CheckOutResponse(
+data class Data(
     @Expose
     @SerializedName("created_at")
     val createdAt: Int,
@@ -31,7 +31,7 @@ data class CheckOutResponse(
     val paymentUrl: String,
     @Expose
     @SerializedName("rating")
-    val rating: Int,
+    val rating: Any,
     @Expose
     @SerializedName("status_bayar")
     val statusBayar: String,

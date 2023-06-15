@@ -1,6 +1,5 @@
 package com.example.laundrysimply.ui.detailcucian
 
-import android.view.View
 import com.example.laundrysimply.base.BasePresenter
 import com.example.laundrysimply.base.BaseView
 import com.example.laundrysimply.model.response.checkout.CheckOutResponse
@@ -12,6 +11,8 @@ interface PaymentContract {
     }
 
     interface Presenter : PaymentContract, BasePresenter {
-        fun CheckOut(layananId : String, userId: Int, totalBayar: String, kuantitas:String, waktuPemesanan:String, waktuPengantaran:String, rating:Int, keterangan:String ,view: android.view.View)
+        fun CheckOut(
+            layananId: String, userId: Int, totalBayar: String, kuantitas:String, waktuPemesanan:String, waktuPengantaran:String, rating:Int, keterangan:String,
+            view: android.view.View)
     }
 }

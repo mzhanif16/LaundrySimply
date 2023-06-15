@@ -1,43 +1,31 @@
-package com.example.laundrysimply.model.response.login
+package com.example.laundrysimply.model.response
 
-import com.google.gson.annotations.Expose
+
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    @Expose
     @SerializedName("address")
-    val address: Any?,
-    @Expose
+    val address: String,
     @SerializedName("created_at")
-    val created_at: Int,
-    @Expose
+    val createdAt: Int,
     @SerializedName("current_team_id")
-    val current_team_id: Any,
-    @Expose
+    val currentTeamId: Any,
     @SerializedName("email")
     val email: String,
-    @Expose
     @SerializedName("id")
     val id: Int,
-    @Expose
     @SerializedName("name")
     val name: String,
-    @Expose
     @SerializedName("notelp")
-    val notelp: Any,
-    @Expose
+    val notelp: String,
     @SerializedName("profile_photo_path")
-    val profile_photo_path: Any,
-    @Expose
+    val profilePhotoPath: Any,
     @SerializedName("profile_photo_url")
-    val profile_photo_url: String,
-    @Expose
+    val profilePhotoUrl: String,
     @SerializedName("roles")
     val roles: String,
-    @Expose
     @SerializedName("two_factor_confirmed_at")
-    val two_factor_confirmed_at: Any,
-    @Expose
+    val twoFactorConfirmedAt: Any,
     @SerializedName("updated_at")
-    val updated_at: Int
+    val updatedAt: Int
 )

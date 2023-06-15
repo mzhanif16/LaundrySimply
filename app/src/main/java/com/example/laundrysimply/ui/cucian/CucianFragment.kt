@@ -1,60 +1,95 @@
 package com.example.laundrysimply.ui.cucian
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
+import com.example.laundrysimply.databinding.FragmentCucianBinding
+import com.example.laundrysimply.model.response.transaksi.Data
+import com.example.laundrysimply.model.response.transaksi.TransaksiResponse
+import com.example.laundrysimply.model.response.transaksi.User
+import com.example.laundrysimply.ui.detailcucian.DetailCucianActivity
+import com.example.laundrysimply.ui.detailtransaksi.DetailTransaksiActivity
+import com.google.gson.Gson
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CucianFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CucianFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class CucianFragment : Fragment(), CucianAdapter.ItemAdapterCallback, TransaksiContract.View {
+    private var _binding: FragmentCucianBinding? = null
+    private val binding get() = _binding!!
+    private var transaksiList : ArrayList<Data> = ArrayList()
+    var progressDialog : Dialog? = null
+    lateinit var presenter: TransaksiPresenter
+    private var userId: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cucian, container, false)
+        _binding = FragmentCucianBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CucianFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CucianFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initView()
+        presenter = TransaksiPresenter(this)
+        var user = LaundrySimply.getApp().getUser()
+        var userResponse = Gson().fromJson(user, User::class.java)
+        userId = userResponse.id
+        presenter.getTransaksi()
+
     }
+
+    private fun initView(){
+        progressDialog = Dialog(requireContext())
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
+
+        progressDialog?.let {
+            it.setContentView(dialogLayout)
+            it.setCancelable(false)
+            it.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+    }
+
+    override fun onClick(v: View, data: Data) {
+        val intent = Intent(context,DetailTransaksiActivity::class.java)
+        intent.putExtra("transaksi_id", data.id)
+        startActivity(intent)
+    }
+
+    override fun onTransaksiSuccess(transaksiResponse: TransaksiResponse) {
+        transaksiList.clear()
+        transaksiList.addAll(transaksiResponse.data)
+        var adapter = CucianAdapter(transaksiList,this)
+        var layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+        binding.rvTransaksi.layoutManager = layoutManager
+        binding.rvTransaksi.adapter = adapter
+
+    }
+
+    override fun onTransaksiFailed(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

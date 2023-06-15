@@ -31,7 +31,6 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
             startActivity(intent)
         }
 
-        initDummy()
         initView()
 
         binding.btnLogin.setOnClickListener {

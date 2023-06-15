@@ -34,7 +34,6 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         setContentView(view)
         presenter = SignUpPresenter(this)
 
-        initDummy()
         initListener()
         initView()
     }

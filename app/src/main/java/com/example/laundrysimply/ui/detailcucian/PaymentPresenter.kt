@@ -30,7 +30,7 @@ class PaymentPresenter(private val view: PaymentContract.View) : PaymentContract
             layananId,
             userId,
             totalBayar,
-            "ON_DELIVERY",
+            "ON DELIVERY",
             "BELUM LUNAS",
             kuantitas,
             waktuPemesanan,

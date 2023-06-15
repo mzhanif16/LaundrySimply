@@ -65,6 +65,7 @@
         android:layout_height="50dp"
         android:background="@drawable/edittext_shape"
         android:hint="Kata Sandi"
+        android:inputType="textPassword"
         android:paddingLeft="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
