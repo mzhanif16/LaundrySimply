@@ -1,5 +1,6 @@
 package com.example.laundrysimply.ui.detailcucian
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laundrysimply.LaundrySimply
+import com.example.laundrysimply.MainActivity
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.ActivityDetailCucianBinding
 import com.example.laundrysimply.model.response.checkout.CheckOutResponse
@@ -90,10 +92,6 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
                 it
             )
         }
-
-
-        binding.cvRating.visibility = View.INVISIBLE
-        binding.cardView.visibility = View.INVISIBLE
     }
 
     private fun initView(){
@@ -108,9 +106,23 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
     }
 
     override fun onPaymentSuccess(checkOutResponse: CheckOutResponse, view: View) {
-        val i= Intent(Intent.ACTION_VIEW)
-        i.data = Uri.parse(checkOutResponse.paymentUrl)
-        startActivity(i)
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setIcon(R.drawable.ic_launcher_foreground)
+        alertDialog.setTitle("Pemberitahuan")
+        alertDialog.setMessage("Apakah Anda ingin membayar sekarang?")
+        alertDialog.setPositiveButton("Ya") { dialog, which ->
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(checkOutResponse.paymentUrl)
+            startActivity(intent)
+        }
+        alertDialog.setNegativeButton("Tidak") { dialog, which ->
+            // Intent ke Home Fragment
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragment", "home")
+            startActivity(intent)
+            finish()
+        }
+        alertDialog.show()
     }
 
     override fun onPaymentFailed(message: String) {

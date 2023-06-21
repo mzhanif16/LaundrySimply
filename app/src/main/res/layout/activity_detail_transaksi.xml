@@ -58,7 +58,7 @@
                 app:layout_constraintVertical_bias="0.5" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+                android:id="@+id/cv1"
                 android:layout_width="319dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="80dp"
@@ -127,7 +127,7 @@
                 app:cardBackgroundColor="#FFF6C3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
+                app:layout_constraintTop_toBottomOf="@+id/cv1">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -461,7 +461,7 @@
                         tools:layout_editor_absoluteX="0dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                        android:id="@+id/rv_detail_transaksi"
                         android:layout_width="300dp"
                         android:layout_height="100dp"
                         android:layout_marginTop="4dp"
@@ -482,7 +482,7 @@
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_detail_transaksi" />
 
                     <TextView
                         android:id="@+id/tv"
@@ -496,7 +496,7 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_detail_transaksi" />
 
                     <TextView
                         android:id="@+id/tv_total_bayar"
@@ -510,7 +510,7 @@
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_detail_transaksi" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -558,7 +558,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/tv_keterangan"
+                        android:id="@+id/et_keterangan"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="8dp"

@@ -1,10 +1,10 @@
-package com.example.laundrysimply.model.response.detailtransaksi
+package com.example.laundrysimply.model.response.transaksi
 
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class DetailTransaksiResponse(
+data class UpdateTransaksiResponse(
     @Expose
     @SerializedName("created_at")
     val createdAt: Int,
@@ -16,13 +16,10 @@ data class DetailTransaksiResponse(
     val id: Int,
     @Expose
     @SerializedName("keterangan")
-    val keterangan: String,
+    val keterangan: String?,
     @Expose
     @SerializedName("kuantitas")
     val kuantitas: String,
-    @Expose
-    @SerializedName("layanan")
-    val layanan: Any,
     @Expose
     @SerializedName("layanan_id")
     val layananId: String,
@@ -31,7 +28,7 @@ data class DetailTransaksiResponse(
     val paymentUrl: String,
     @Expose
     @SerializedName("rating")
-    val rating: Any,
+    val rating: Float,
     @Expose
     @SerializedName("status_bayar")
     val statusBayar: String,
@@ -44,9 +41,6 @@ data class DetailTransaksiResponse(
     @Expose
     @SerializedName("updated_at")
     val updatedAt: Int,
-    @Expose
-    @SerializedName("user")
-    val user: User,
     @Expose
     @SerializedName("user_id")
     val userId: Int,

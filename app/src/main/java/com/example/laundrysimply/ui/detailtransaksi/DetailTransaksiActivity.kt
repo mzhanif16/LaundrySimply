@@ -7,19 +7,27 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
-import com.example.laundrysimply.databinding.ActivityDetailCucianBinding
 import com.example.laundrysimply.databinding.ActivityDetailTransaksiBinding
 import com.example.laundrysimply.model.response.detailtransaksi.DetailTransaksiResponse
-import com.example.laundrysimply.model.response.transaksi.TransaksiResponse
-import com.example.laundrysimply.ui.cucian.TransaksiContract
-import com.example.laundrysimply.ui.cucian.TransaksiPresenter
+import com.example.laundrysimply.model.response.layanan.Data
+import com.example.laundrysimply.model.response.layanan.LayananResponse
+import com.example.laundrysimply.model.response.login.User
+import com.example.laundrysimply.model.response.transaksi.UpdateTransaksiResponse
+import com.google.gson.Gson
 
-class DetailTransaksiActivity : AppCompatActivity() , DetailTransaksiContract.View{
-    var progressDialog : Dialog? = null
+class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.View,
+    UpdateTransaksiContract.View {
+    var progressDialog: Dialog? = null
     lateinit var presenter: DetailTransaksiPresenter
+    lateinit var presenter2: UpdateTransaksiPresenter
     private lateinit var binding: ActivityDetailTransaksiBinding
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -32,12 +40,23 @@ class DetailTransaksiActivity : AppCompatActivity() , DetailTransaksiContract.Vi
         val transaksiId = intent.getIntExtra("transaksi_id", 0)
         initView()
         presenter = DetailTransaksiPresenter(this)
+        presenter2 = UpdateTransaksiPresenter(this)
         presenter.getDetailTransaksi(transaksiId)
+        val rating = binding.rbOutlet
+        rating.setIsIndicator(false)
 
+
+        binding.btnLanjut.setOnClickListener {
+            val keterangan = binding.etKeterangan.text.toString()
+            Log.d("test", keterangan)
+            Log.d("test2", rating.toString())
+            val nilaiRating = rating.rating
+            presenter2.Rating(transaksiId, nilaiRating, keterangan)
+        }
 
     }
 
-    private fun initView(){
+    private fun initView() {
         progressDialog = Dialog(this)
         val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
 
@@ -49,8 +68,38 @@ class DetailTransaksiActivity : AppCompatActivity() , DetailTransaksiContract.Vi
     }
 
     override fun onTransaksiSuccess(detailTransaksiResponse: DetailTransaksiResponse) {
+        val idLayanan = detailTransaksiResponse.layananId.split(",").map{it.toInt()}
+//        var user = LaundrySimply.getApp().getUser()
+//        var userResponse = Gson().fromJson(user,LayananResponse::class.java)
+//        val listData = ArrayList<Data>()
+//
+//        for (data in idLayanan){
+//            listData.add(userResponse.data.first { data -> data.id.equals(idLayanan) })
+//        }
+
+        binding.btnLanjut.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        binding.cvRating.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
+//        if(detailTransaksiResponse.keterangan.isNotEmpty()){
+//            binding.etKeterangan.isEnabled = false
+//            binding.rbOutlet.setIsIndicator(true)
+//            binding.btnLanjut.visibility = View.GONE
+//
+//        }
+//        var adapter = DetailTransaksiAdapter(listData)
+//        var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+//        binding.rvDetailTransaksi.layoutManager = layoutManager
+//        binding.rvDetailTransaksi.adapter = adapter
         binding.tvIdtransaksi.text = detailTransaksiResponse.id.toString()
-        binding.tvNamauser.text= detailTransaksiResponse.user.name
+        binding.tvNamauser.text = detailTransaksiResponse.user.name
         binding.tvNotelp.text = detailTransaksiResponse.user.notelp
         binding.tvAlamat.text = detailTransaksiResponse.user.address
         binding.tvPaymentURL.text = detailTransaksiResponse.paymentUrl
@@ -59,9 +108,10 @@ class DetailTransaksiActivity : AppCompatActivity() , DetailTransaksiContract.Vi
         binding.tvStatusTransaksi.text = detailTransaksiResponse.statusTransaksi
         binding.tvWaktuanter.text = detailTransaksiResponse.waktuPengantaran
         binding.tvWaktupesan.text = detailTransaksiResponse.waktuPemesanan
+        binding.etKeterangan.setText(detailTransaksiResponse.keterangan)
 
         binding.tvPaymentURL.setOnClickListener {
-            val i= Intent(Intent.ACTION_VIEW)
+            val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(detailTransaksiResponse.paymentUrl)
             startActivity(i)
         }
@@ -69,6 +119,14 @@ class DetailTransaksiActivity : AppCompatActivity() , DetailTransaksiContract.Vi
     }
 
     override fun onTransaksiFailed(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onUpdateTransaksiSuccess(updateTransaksiPresenter: UpdateTransaksiResponse) {
+        Toast.makeText(this, "Sukses Menambahkan Feedback", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onUpdateTransaksiFailed(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
