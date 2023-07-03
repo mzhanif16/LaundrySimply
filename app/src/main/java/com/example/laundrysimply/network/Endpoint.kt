@@ -1,9 +1,8 @@
 package com.example.laundrysimply.network
 
 
-import android.text.Editable
 import com.example.laundrysimply.model.response.Wrapper
-import com.example.laundrysimply.model.response.checkout.CheckOutResponse
+import com.example.laundrysimply.model.response.checkout.CheckOutResponse1
 import com.example.laundrysimply.model.response.detailtransaksi.DetailTransaksiResponse
 import com.example.laundrysimply.model.response.home.HomeResponse
 import com.example.laundrysimply.model.response.layanan.LayananResponse
@@ -14,6 +13,7 @@ import com.example.laundrysimply.model.response.transaksi.TransaksiResponse
 import com.example.laundrysimply.model.response.transaksi.UpdateTransaksiResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface Endpoint {
@@ -34,6 +34,9 @@ interface Endpoint {
         @Field("address") password: String
     ): Observable<Wrapper<UpdateProfileResponse>>
 
+    @Headers("Content-Type: application/json")
+    @POST("checkout")
+    fun checkout(@Body request: RequestBody): Observable<Wrapper<CheckOutResponse1>>
     @FormUrlEncoded
     @POST("checkout")
     fun checkout(
@@ -46,8 +49,9 @@ interface Endpoint {
         @Field("waktu_pemesanan") waktu_pemesanan: String,
         @Field("waktu_pengantaran") waktu_pengantaran: String,
         @Field("rating") rating: Int,
-        @Field("keterangan") keterangan: String
-    ): Observable<Wrapper<CheckOutResponse>>
+        @Field("keterangan") keterangan: String,
+        @Field("outlet_id") outlet_id:Int,
+    ): Observable<Wrapper<CheckOutResponse1>>
 
     @FormUrlEncoded
     @POST("register")

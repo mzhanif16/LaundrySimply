@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.laundrysimply.R
 import androidx.recyclerview.widget.RecyclerView
-import com.example.laundrysimply.model.dummy.TransaksiModel
 import com.example.laundrysimply.model.response.transaksi.Data
 
 class CucianAdapter(

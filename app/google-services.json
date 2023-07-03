@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "652789462027",
+    "project_id": "laundrysimply-aec51",
+    "storage_bucket": "laundrysimply-aec51.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652789462027:android:490fb1ee987a8205b5830e",
+        "android_client_info": {
+          "package_name": "com.example.laundrysimply.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652789462027-1em9qr8iqsmt6rh63005a29rs22fgb0o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.laundrysimply.dev",
+            "certificate_hash": "e6cb71f993ec132c940168229bba65de822cf265"
+          }
+        },
+        {
+          "client_id": "652789462027-j24hd91el9jgd3t2v79f7abvdkuchkal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4ic3TWj5Li-OiDomoVNDCNLm-xk223hU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652789462027-j24hd91el9jgd3t2v79f7abvdkuchkal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

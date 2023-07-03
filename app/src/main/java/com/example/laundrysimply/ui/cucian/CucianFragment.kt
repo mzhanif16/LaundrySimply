@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.FragmentCucianBinding
+import com.example.laundrysimply.model.response.login.LoginResponse
 import com.example.laundrysimply.model.response.transaksi.Data
 import com.example.laundrysimply.model.response.transaksi.TransaksiResponse
 import com.example.laundrysimply.model.response.transaksi.User
-import com.example.laundrysimply.ui.detailcucian.DetailCucianActivity
+import com.example.laundrysimply.network.HttpClient
 import com.example.laundrysimply.ui.detailtransaksi.DetailTransaksiActivity
 import com.google.gson.Gson
 
@@ -67,13 +68,16 @@ class CucianFragment : Fragment(), CucianAdapter.ItemAdapterCallback, TransaksiC
     }
 
     override fun onTransaksiSuccess(transaksiResponse: TransaksiResponse) {
-        transaksiList.clear()
-        transaksiList.addAll(transaksiResponse.data)
-        var adapter = CucianAdapter(transaksiList,this)
-        var layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
-        binding.rvTransaksi.layoutManager = layoutManager
-        binding.rvTransaksi.adapter = adapter
-
+        if(transaksiResponse.data.isNullOrEmpty()){
+            binding.tvInformasi.visibility = View.VISIBLE
+        }else{
+            transaksiList.clear()
+            transaksiList.addAll(transaksiResponse.data)
+            var adapter = CucianAdapter(transaksiList,this)
+            var layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+            binding.rvTransaksi.layoutManager = layoutManager
+            binding.rvTransaksi.adapter = adapter
+        }
     }
 
     override fun onTransaksiFailed(message: String) {

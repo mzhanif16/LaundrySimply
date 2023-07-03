@@ -55,6 +55,7 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
             bundle.putParcelableArrayList("data", dataA)
             bundle.putInt("total_kuantitas", totalKuantitas)
             bundle.putInt("total_bayar", totalBayar)
+            bundle.putInt("outlet_id",outletId)
             bundle.putString("outlet_nama", outletNama)
             bundle.putString("outlet_alamat", outletAlamat)
             intent.putExtras(bundle)
@@ -74,6 +75,10 @@ class DetailLayananActivity : AppCompatActivity(), LayananAdapter.ItemAdapterCal
             it.setCancelable(false)
             it.window?.setBackgroundDrawableResource(android.R.color.transparent)
         }
+    }
+
+    fun onBackPressed(view: View){
+        onBackPressed()
     }
 
     override fun onClick(data: Data) {

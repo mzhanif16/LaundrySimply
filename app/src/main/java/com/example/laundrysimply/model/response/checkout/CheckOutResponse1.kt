@@ -4,7 +4,7 @@ package com.example.laundrysimply.model.response.checkout
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CheckOutResponse(
+data class CheckOutResponse1(
     @Expose
     @SerializedName("created_at")
     val createdAt: Int,
@@ -16,25 +16,22 @@ data class CheckOutResponse(
     val id: Int,
     @Expose
     @SerializedName("keterangan")
-    val keterangan: String,
+    val keterangan: Any,
     @Expose
     @SerializedName("kuantitas")
     val kuantitas: String,
     @Expose
-    @SerializedName("layanan_id")
-    val layananId: String,
-    @Expose
-    @SerializedName("outlet")
-    val outlet: Outlet,
+    @SerializedName("layanan")
+    val layanan: List<Layanan>,
     @Expose
     @SerializedName("outlet_id")
-    val outletId: Int,
+    val outletId: Any,
     @Expose
     @SerializedName("payment_url")
     val paymentUrl: String,
     @Expose
     @SerializedName("rating")
-    val rating: Int,
+    val rating: Any,
     @Expose
     @SerializedName("status_bayar")
     val statusBayar: String,

@@ -22,16 +22,19 @@ data class DetailTransaksiResponse(
     val kuantitas: String,
     @Expose
     @SerializedName("layanan")
-    val layanan: Any,
+    val layanan: List<Layanan>,
     @Expose
-    @SerializedName("layanan_id")
-    val layananId: String,
+    @SerializedName("outlet")
+    val outlet: Outlet,
+    @Expose
+    @SerializedName("outlet_id")
+    val outletId: Int,
     @Expose
     @SerializedName("payment_url")
     val paymentUrl: String,
     @Expose
     @SerializedName("rating")
-    val rating: Any,
+    val rating: Float,
     @Expose
     @SerializedName("status_bayar")
     val statusBayar: String,
@@ -55,5 +58,8 @@ data class DetailTransaksiResponse(
     val waktuPemesanan: String,
     @Expose
     @SerializedName("waktu_pengantaran")
-    val waktuPengantaran: String
+    val waktuPengantaran: String,
+    @Expose
+    @SerializedName("pivot")
+    val Pivot: Pivot
 )

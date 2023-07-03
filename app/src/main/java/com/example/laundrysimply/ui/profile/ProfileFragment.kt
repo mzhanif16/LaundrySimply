@@ -1,16 +1,21 @@
 package com.example.laundrysimply.ui.profile
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.FragmentProfileBinding
@@ -19,7 +24,7 @@ import com.example.laundrysimply.model.response.profile.UpdateProfileResponse
 import com.example.laundrysimply.network.Endpoint
 import com.example.laundrysimply.network.HttpClient
 import com.example.laundrysimply.ui.signin.SignInActivity
-import com.example.laundrysimply.ui.signin.SigninPresenter
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -31,6 +36,9 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
     private lateinit var laundrysimply: LaundrySimply
     var progressDialog : Dialog? = null
     lateinit var presenter: UpdateProfilePresenter
+    private val REQUEST_IMAGE_PICK = 1
+    private val REQUEST_IMAGE_CAPTURE = 1
+    var filePath: Uri?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +53,13 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         endpoint = HttpClient.getInstance().getApi() ?: throw IllegalStateException("ApiService is null")
         laundrysimply = LaundrySimply.getApp()
         presenter = UpdateProfilePresenter(this)
+        initListener()
         initView()
 
         binding.ibLogout.setOnClickListener {
             val accessToken = laundrysimply.getToken()
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setIcon(R.drawable.ic_launcher_foreground)
+            alertDialogBuilder.setIcon(R.drawable.logo)
             alertDialogBuilder.setTitle("Konfirmasi Logout")
             alertDialogBuilder.setMessage("Apakah Anda yakin ingin logout?")
             alertDialogBuilder.setPositiveButton("Ya") { dialog: DialogInterface, _: Int ->
@@ -78,6 +87,7 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         binding.tvEmail.isEnabled = false
         binding.tvAlamat.isEnabled = false
         binding.tvNotelp.isEnabled = false
+        binding.imageView9.isClickable = false
 
 
         var isEditMode = false
@@ -89,6 +99,7 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
                 binding.tvEmail.isEnabled = true
                 binding.tvAlamat.isEnabled = true
                 binding.tvNotelp.isEnabled = true
+                binding.imageView9.isClickable = true
                 binding.btnSimpan.text = "Simpan"
             }else{
                 isEditMode = false
@@ -96,6 +107,7 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
                 binding.tvEmail.isEnabled = false
                 binding.tvAlamat.isEnabled = false
                 binding.tvNotelp.isEnabled = false
+                binding.imageView9.isClickable = false
                 binding.btnSimpan.text = "Edit Profile"
 
                 val nama = binding.tvNama.text.toString()
@@ -103,11 +115,10 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
                 val alamat = binding.tvAlamat.text.toString()
                 val notelp = binding.tvNotelp.text.toString()
 
-                presenter.updateProfile(nama,email,notelp,alamat)
+                presenter.updateProfile(nama,email,notelp,alamat,it)
             }
         }
     }
-
     @SuppressLint("CheckResult")
     private fun logout(accessToken: String) {
         val authorizationHeader = "Bearer $accessToken"
@@ -169,21 +180,48 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         }
     }
 
-    private fun showLogoutConfirmationDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setTitle("Konfirmasi Logout")
-        alertDialogBuilder.setMessage("Apakah Anda yakin ingin logout?")
-        alertDialogBuilder.setPositiveButton("Ya") { dialog: DialogInterface, _: Int ->
-            dialog.dismiss()
-            // Logout dilakukan setelah pengguna memilih "Ya"
+    private fun initListener() {
+        binding.imageView9.setOnClickListener {
+            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
 
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Pilih Foto")
+            builder.setItems(options) { dialog, item ->
+                when {
+                    options[item] == "Ambil Foto" -> {
+                        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE)
+                    }
+                    options[item] == "Pilih dari Galeri" -> {
+                        val pickPhoto =
+                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK)
+                    }
+                    options[item] == "Batal" -> {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            builder.show()
         }
-        alertDialogBuilder.setNegativeButton("Tidak") { dialog: DialogInterface, _: Int ->
-            dialog.dismiss()
-            // Tidak melakukan logout jika pengguna memilih "Tidak"
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
+            filePath = data?.data
+            Glide.with(this)
+                .load(filePath)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.imageView9)
+        }else if(requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK){
+            filePath = data?.data
+            Glide.with(this)
+                .load(filePath)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.imageView9)
         }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+
     }
 
     private fun navigateToSignInActivity() {
@@ -197,8 +235,14 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         _binding = null
     }
 
-    override fun onUpdateProfileSuccess(updateProfileResponse: UpdateProfileResponse) {
-            Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
+    override fun onUpdateProfileSuccess(updateProfileResponse: UpdateProfileResponse, view: View) {
+        Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
+
+        filePath?.let { presenter.submitPhotoRegister(it, view) }
+    }
+
+    override fun onRegisterPhotoSuccess(view: View) {
+        TODO("Not yet implemented")
     }
 
     override fun onUpdateProfieFailed(message: String) {

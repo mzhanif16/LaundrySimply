@@ -39,8 +39,8 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_arrow_back_ios_24" />
@@ -49,7 +49,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Buat sebuah akun"
         android:textColor="@color/black"
@@ -76,7 +76,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="282dp"
-        android:layout_height="322dp"
+        android:layout_height="365dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
             android:id="@+id/tv_notelp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/edittext_shape"
             android:hint="Nomor Telepon"
             android:paddingLeft="30dp" />
@@ -105,16 +105,25 @@
             android:id="@+id/tv_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/edittext_shape"
             android:hint="Email"
+            android:paddingLeft="30dp" />
+
+        <EditText
+            android:id="@+id/tv_alamatuser"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittext_shape"
+            android:hint="Alamat"
             android:paddingLeft="30dp" />
 
         <EditText
             android:id="@+id/tv_katasandi"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/edittext_shape"
             android:hint="Kata Sandi"
             android:inputType="textPassword"
@@ -124,7 +133,7 @@
             android:id="@+id/tv_konfirmasisandi"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:inputType="textPassword"
             android:background="@drawable/edittext_shape"
             android:hint="Konfirmasi Kata Sandi"

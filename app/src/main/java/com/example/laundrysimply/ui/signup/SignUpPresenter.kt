@@ -1,6 +1,9 @@
 package com.example.laundrysimply.ui.signup
 
+import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
 import android.view.View
 import com.example.laundrysimply.model.request.RegisterRequest
@@ -12,6 +15,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.FileOutputStream
 
 class SignUpPresenter(private val view: SignUpContract.View): SignUpContract.Presenter {
 
@@ -28,7 +32,7 @@ class SignUpPresenter(private val view: SignUpContract.View): SignUpContract.Pre
             registerRequest.password,
             registerRequest.password_confirmation,
             registerRequest.address,
-            registerRequest.notelp,
+            registerRequest.notelp
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -52,9 +56,22 @@ class SignUpPresenter(private val view: SignUpContract.View): SignUpContract.Pre
     override fun submitPhotoRegister(filePath: Uri, viewParms:View) {
         view.showLoading()
 
-        var profileImageFile = File(filePath.path)
-        var profileImageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), profileImageFile)
-        val profileImageParms = MultipartBody.Part.createFormData("file", profileImageFile.name, profileImageRequestBody)
+        val contentResolver: ContentResolver = viewParms.context.contentResolver
+        val inputStream = contentResolver.openInputStream(filePath)
+
+        val fileName = getFileName(filePath, contentResolver)
+        val file = createFileInCacheDir(viewParms.context, fileName)
+        val outputStream = FileOutputStream(file)
+
+        inputStream?.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        var profileImageFile = File(filePath.path!!)
+        var profileImageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), fileName)
+        val profileImageParms = MultipartBody.Part.createFormData("file", fileName, profileImageRequestBody)
 
         val disposable = HttpClient.getInstance().getApi()!!.registerPhoto(profileImageParms)
             .subscribeOn(Schedulers.io())
@@ -81,5 +98,21 @@ class SignUpPresenter(private val view: SignUpContract.View): SignUpContract.Pre
 
     override fun unSubscribe() {
         mCompositeDisposable!!.clear()
+    }
+    // Fungsi untuk mendapatkan nama file dari Uri
+    private fun getFileName(uri: Uri, contentResolver: ContentResolver): String {
+        val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
+        contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+                return cursor.getString(columnIndex)
+            }
+        }
+        return ""
+    }
+    // Fungsi untuk membuat file di direktori cache aplikasi
+    private fun createFileInCacheDir(context: Context, fileName: String): File {
+        val cacheDir = context.cacheDir
+        return File(cacheDir, fileName)
     }
 }

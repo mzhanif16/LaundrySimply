@@ -58,11 +58,10 @@ class HomeFragment : Fragment() , HomeContract.View{
         var user = LaundrySimply.getApp().getUser()
         var userResponse = Gson().fromJson(user,User::class.java)
         binding.tvNamauser.setText(userResponse.name)
-        if(!userResponse.profile_photo_url.isNullOrEmpty()){
             Glide.with(requireActivity())
                 .load(userResponse.profile_photo_path)
                 .into(binding.imageView5)
-        }
+
     }
 
     override fun onDestroyView() {

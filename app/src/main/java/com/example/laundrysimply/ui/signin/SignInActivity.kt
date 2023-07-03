@@ -1,6 +1,7 @@
 package com.example.laundrysimply.ui.signin
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.example.laundrysimply.databinding.ActivitySignInBinding
 import com.example.laundrysimply.model.response.login.LoginResponse
 import com.example.laundrysimply.ui.signup.SignUpActivity
 import com.google.gson.Gson
+import kotlin.math.log
 
 class SignInActivity : AppCompatActivity(), SignContract.View {
 
@@ -29,6 +31,7 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
         if(!LaundrySimply.getApp().getToken().isNullOrEmpty()){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         initView()
@@ -56,10 +59,9 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
 
     override fun onLoginSuccess(loginResponse: LoginResponse) {
 
-        LaundrySimply.getApp().setToken(loginResponse.access_token)
-
         val gson = Gson()
         val json = gson.toJson(loginResponse.user)
+        LaundrySimply.getApp().setToken(loginResponse.access_token)
         LaundrySimply.getApp().setUser(json)
 
         val intent = Intent(this, MainActivity::class.java)

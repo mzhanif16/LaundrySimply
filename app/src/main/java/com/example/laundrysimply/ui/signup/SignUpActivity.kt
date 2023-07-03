@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.laundrysimply.LaundrySimply
@@ -23,10 +24,12 @@ import com.google.gson.Gson
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     var filePath: Uri? = null
     private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_IMAGE_PICK = 1
     lateinit var presenter: SignUpPresenter
     var progressDialog: Dialog? = null
     private lateinit var data: RegisterRequest
     private lateinit var binding: ActivitySignUpBinding
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -38,45 +41,33 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         initView()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == Activity.RESULT_OK){
-//            filePath = data?.data
-//
-//            Glide.with(this)
-//                .load(filePath)
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(binding.ivProfil)
-//        } else if (resultCode == ImagePicker.RESULT_ERROR){
-//            Toast.makeText(this,ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-//        } else{
-//            Toast.makeText(this,"Task Cancelled ", Toast.LENGTH_SHORT).show()
-//        }
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            filePath = data?.data
-            Glide.with(this)
-                .load(filePath)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.ivProfil)
-        } else {
-            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun initListener() {
-//        binding.ivProfil.setOnClickListener{
-//            ImagePicker.with(this)
-//                .cameraOnly()
-//                .start()
-//        }
         binding.ivProfil.setOnClickListener {
-            val takepicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takepicture.resolveActivity(packageManager) != null) {
-                startActivityForResult(takepicture, REQUEST_IMAGE_CAPTURE)
-            } else {
-                Toast.makeText(this, "Tidak ada aplikasi kamera", Toast.LENGTH_SHORT).show()
+            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Pilih Foto")
+            builder.setItems(options) { dialog, item ->
+                when {
+                    options[item] == "Ambil Foto" -> {
+                        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (takePicture.resolveActivity(packageManager) != null) {
+                            startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE)
+                        } else {
+                            Toast.makeText(this, "Tidak ada aplikasi kamera", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    options[item] == "Pilih dari Galeri" -> {
+                        val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK)
+                    }
+                    options[item] == "Batal" -> {
+                        dialog.dismiss()
+                    }
+                }
             }
+            builder.show()
         }
 
         binding.btnDaftar.setOnClickListener {
@@ -85,6 +76,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
             var password = binding.tvKatasandi.text.toString()
             var confirmpassword = binding.tvKonfirmasisandi.text.toString()
             var notelp = binding.tvNotelp.text.toString()
+            var alamat = binding.tvAlamatuser.text.toString()
             val bundle = intent.extras
             if (bundle != null) {
                 data = bundle.getParcelable("data")!!
@@ -95,7 +87,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
                 notelp,
                 password,
                 confirmpassword,
-                "",
+                alamat,
                 filePath
             )
 
@@ -114,18 +106,32 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
             } else if (notelp.isNullOrEmpty()) {
                 binding.tvNotelp.error = "Silahkan masukkan no telp !"
                 binding.tvNotelp.requestFocus()
+            } else if (alamat.isNullOrEmpty()) {
+                binding.tvNotelp.error = "Silahkan masukkan alamat !"
+                binding.tvNotelp.requestFocus()
             } else {
                 presenter.submitRegister(data, it)
             }
         }
     }
 
-    private fun initDummy() {
-        binding.tvNama.setText("Mz Hanif")
-        binding.tvEmail.setText("mz@gmail.com")
-        binding.tvKatasandi.setText("hanif53gan")
-        binding.tvNotelp.setText("081122334439")
-        binding.tvKonfirmasisandi.setText("hanif53gan")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            filePath = data?.data
+            Glide.with(this)
+                .load(filePath)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.ivProfil)
+        }else if(requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK ){
+            filePath = data?.data
+            Glide.with(this)
+                .load(filePath)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.ivProfil)
+        }else {
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onRegisterSuccess(loginResponse: LoginResponse, view: View) {

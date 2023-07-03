@@ -47,6 +47,7 @@ class PilihWaktuActivity : AppCompatActivity() {
             val totalKuantitas = bundle.getInt("total_kuantitas", 0)
             val totalBayar = bundle.getInt("total_bayar", 0)
             val outletNama = bundle.getString("outlet_nama")
+            val outletId = bundle.getInt("outlet_id",0)
             val outletAlamat = bundle.getString("outlet_alamat")
             val dataA = bundle.getParcelableArrayList<Data>("data") as ArrayList<Data>?
 
@@ -56,14 +57,19 @@ class PilihWaktuActivity : AppCompatActivity() {
 
             val intent = Intent(this, DetailCucianActivity::class.java)
             binding.btnLanjut.setOnClickListener {
-                intent.putExtra("total_kuantitas", totalKuantitas)
-                intent.putExtra("total_bayar", totalBayar)
-                intent.putExtra("outlet_nama", outletNama)
-                intent.putExtra("outlet_alamat", outletAlamat)
-                intent.putExtra("data", dataA)
-                intent.putExtra("tanggal_pickup", tanggalPickup)
-                intent.putExtra("tanggal_delivery", tanggalDelivery)
-                startActivity(intent)
+                if (binding.etTanggalPickup.text.toString().isEmpty() || binding.etTanggalDeliv.text.toString().isEmpty()) {
+                    Toast.makeText(this, "Silakan isi tanggal pickup dan tanggal delivery", Toast.LENGTH_SHORT).show()
+                } else {
+                    intent.putExtra("total_kuantitas", totalKuantitas)
+                    intent.putExtra("total_bayar", totalBayar)
+                    intent.putExtra("outlet_nama", outletNama)
+                    intent.putExtra("outlet_alamat", outletAlamat)
+                    intent.putExtra("data", dataA)
+                    intent.putExtra("outlet_id",outletId)
+                    intent.putExtra("tanggal_pickup", tanggalPickup)
+                    intent.putExtra("tanggal_delivery", tanggalDelivery)
+                    startActivity(intent)
+                }
 
 
             }
@@ -114,5 +120,8 @@ class PilihWaktuActivity : AppCompatActivity() {
             }, tahun2, bulan2, tanggal2)
             dialog.show()
         }
+    }
+    fun onBackPressed(view: View) {
+        onBackPressed()
     }
 }
