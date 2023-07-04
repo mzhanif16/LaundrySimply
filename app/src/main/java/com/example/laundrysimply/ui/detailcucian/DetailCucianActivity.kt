@@ -78,6 +78,7 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         binding.tvWaktupesan.text = tanggalPickup
         binding.tvWaktuanter.text = tanggalDelivery
         binding.tvTotalBayar.formatPrice(totalBayar.toString())
+        binding.tvTotalkuantitas.text = totalKuantitas.toString()
 
         val adapter = DetailCucianAdapter(dataA)
         var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -88,7 +89,7 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         presenter = PaymentPresenter(this)
         val kuantitasperlayanan = dataA.map { data -> data.kuantitas  }
         val result = kuantitasperlayanan.joinToString(separator = "")
-        Log.d("kuantitas", result.toString())
+        Log.d("kuantitas", result)
         val dataIds = dataA.map { data -> data.id }
         val dataIdsString = dataIds.joinToString(",")
         val dataArray = dataIdsString

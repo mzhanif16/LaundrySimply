@@ -13,5 +13,7 @@ interface UpdateTransaksiContract {
 
     interface Presenter : UpdateTransaksiContract, BasePresenter {
         fun Rating(id:Int, rating: Float, keterangan: String)
+
+        fun Cancel(id: Int, statusTransaksi: String)
     }
 }

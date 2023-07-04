@@ -51,6 +51,11 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
             presenter2.Rating(transaksiId, nilaiRating, keterangan)
         }
 
+        binding.btnCancel.setOnClickListener {
+            binding.tvPaymentURL.text = "-"
+            presenter2.Cancel(transaksiId,"CANCELLED")
+        }
+
     }
 
     private fun initView() {
@@ -65,20 +70,18 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
     }
 
     override fun onTransaksiSuccess(detailTransaksiResponse: DetailTransaksiResponse) {
-//        val idLayanan = detailTransaksiResponse.layananId.split(",").map{it.toInt()}
-//        var user = LaundrySimply.getApp().getUser()
-//        var userResponse = Gson().fromJson(user, LayananResponse::class.java)
-//        val listData = ArrayList<Data>()
         val data = detailTransaksiResponse.layanan
         val listData = ArrayList<Layanan>(data)
 
-//        for (data in idLayanan){
-//            listData.add(userResponse.data.first { data -> data.id.equals(idLayanan) })
-//        }
         binding.btnLanjut.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
             View.VISIBLE
         } else {
             View.GONE
+        }
+        binding.btnCancel.visibility = if(detailTransaksiResponse.statusBayar == "SUCCESS" || detailTransaksiResponse.statusTransaksi == "CANCELLED"){
+            View.GONE
+        }else {
+            View.VISIBLE
         }
         binding.cvRating.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
             View.VISIBLE
@@ -97,9 +100,18 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
         binding.tvNotelp.text = detailTransaksiResponse.user.notelp
         binding.tvAlamat.text = detailTransaksiResponse.user.address
         binding.tvPaymentURL.text = detailTransaksiResponse.paymentUrl
+        if(detailTransaksiResponse.statusTransaksi.equals("CANCELLED")){
+            binding.tvPaymentURL.visibility = View.GONE
+        }
         binding.tvTotalBayar.formatPrice(detailTransaksiResponse.totalBayar)
+        binding.tvTotalkuantitas.text = detailTransaksiResponse.kuantitas
         binding.tvStatusBayar.text = detailTransaksiResponse.statusBayar
         binding.tvStatusTransaksi.text = detailTransaksiResponse.statusTransaksi
+        if(detailTransaksiResponse.statusTransaksi.equals("CANCELLED")){
+            binding.tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_cancelled)
+        }else if (detailTransaksiResponse.statusTransaksi.equals("DELIVERED")){
+            binding.tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_delivered)
+        }
         binding.tvWaktuanter.text = detailTransaksiResponse.waktuPengantaran
         binding.tvWaktupesan.text = detailTransaksiResponse.waktuPemesanan
         binding.rbOutlet.rating = detailTransaksiResponse.rating
@@ -127,7 +139,7 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
     }
 
     override fun onUpdateTransaksiSuccess(updateTransaksiPresenter: UpdateTransaksiResponse) {
-        Toast.makeText(this, "Sukses Menambahkan Feedback", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Sukses Update Transaksi", Toast.LENGTH_SHORT).show()
         val pindah = Intent(this, MainActivity::class.java)
         startActivity(pindah)
     }

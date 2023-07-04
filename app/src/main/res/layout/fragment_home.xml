@@ -54,16 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="48dp"
-        android:src="@drawable/baseline_notifications_none_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
@@ -135,12 +125,12 @@
         android:id="@+id/cv_2"
         android:layout_width="155dp"
         android:layout_height="155dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
         android:elevation="5dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tv2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

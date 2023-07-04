@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/tv_nama_layanan_detail"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Cuci Setrika"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="10.000 / kg"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="/kg "
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tv_harga_layanan_detail"
         app:layout_constraintTop_toBottomOf="@+id/tv_nama_layanan_detail" />
 

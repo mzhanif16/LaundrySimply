@@ -59,7 +59,7 @@ class HomeFragment : Fragment() , HomeContract.View{
         var userResponse = Gson().fromJson(user,User::class.java)
         binding.tvNamauser.setText(userResponse.name)
             Glide.with(requireActivity())
-                .load(userResponse.profile_photo_path)
+                .load(R.drawable.logo)
                 .into(binding.imageView5)
 
     }

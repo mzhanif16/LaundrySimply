@@ -354,9 +354,9 @@
                         android:layout_height="1dp"
                         android:background="@android:color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.691"
-                        tools:layout_editor_absoluteX="0dp" />
+                        app:layout_constraintVertical_bias="0.587" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
@@ -374,6 +374,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:padding="8dp"
+                        android:text="Total Kuantitas"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
                         android:fontFamily="@font/poppins_medium"
                         android:padding="8dp"
                         android:text="Total Bayar"
@@ -397,10 +410,38 @@
                         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
                     <TextView
-                        android:id="@+id/tv_total_bayar"
+                        android:id="@+id/tvv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="176dp"
+                        android:padding="8dp"
+                        android:text=":"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+                    <TextView
+                        android:id="@+id/tv_totalkuantitas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:padding="8dp"
+                        android:text="Rp. 200.000"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+                    <TextView
+                        android:id="@+id/tv_total_bayar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/poppins_medium"
                         android:padding="8dp"

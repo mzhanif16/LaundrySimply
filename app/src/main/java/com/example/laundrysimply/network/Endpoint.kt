@@ -85,7 +85,12 @@ interface Endpoint {
     fun updateRating(
         @Path("id") id: Int,
         @Field("rating") rating: Float,
-        @Field("keterangan") keterangan: String
+        @Field("keterangan") keterangan: String): Observable<Wrapper<UpdateTransaksiResponse>>
+    @FormUrlEncoded
+    @POST("transaksi/{id}")
+    fun Cancel(
+       @Path("id") id: Int,
+       @Field("status_transaksi") status_transaksi: String
     ): Observable<Wrapper<UpdateTransaksiResponse>>
 
     @POST("logout")

@@ -33,6 +33,11 @@ class CucianAdapter(
             itemView.apply {
                 tvIdTransaksi.text = data.id.toString()
                 tvStatusTransaksi.text = data.statusTransaksi
+                if (data.statusTransaksi.equals("CANCELLED")){
+                    tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_cancelled)
+                }else if (data.statusTransaksi.equals("DELIVERED")){
+                    tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_delivered)
+                }
 
                 itemView.setOnClickListener { itemAdapterCallback.onClick(it, data) }
             }
