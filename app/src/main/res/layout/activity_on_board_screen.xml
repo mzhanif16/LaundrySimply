@@ -13,8 +13,10 @@
         android:layout_height="729dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/background" />
 
     <ImageView
@@ -28,10 +30,10 @@
         app:srcCompat="@drawable/logo" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/btndaftar"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/button_shape_red"
         android:fontFamily="@font/poppins_medium"
         android:text="Daftar"
@@ -44,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnmasuk"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:background="@drawable/button_shape_white"
@@ -56,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintTop_toBottomOf="@+id/btndaftar"
         app:layout_constraintVertical_bias="0.142" />
 
 

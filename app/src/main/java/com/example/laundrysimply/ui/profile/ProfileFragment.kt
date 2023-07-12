@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.laundrysimply.LaundrySimply
+import com.example.laundrysimply.OnBoardScreenActivity
 import com.example.laundrysimply.R
 import com.example.laundrysimply.databinding.FragmentProfileBinding
 import com.example.laundrysimply.model.response.login.User
@@ -36,8 +38,6 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
     private lateinit var laundrysimply: LaundrySimply
     var progressDialog : Dialog? = null
     lateinit var presenter: UpdateProfilePresenter
-    private val REQUEST_IMAGE_PICK = 1
-    private val REQUEST_IMAGE_CAPTURE = 1
     var filePath: Uri?= null
 
     override fun onCreateView(
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         endpoint = HttpClient.getInstance().getApi() ?: throw IllegalStateException("ApiService is null")
         laundrysimply = LaundrySimply.getApp()
         presenter = UpdateProfilePresenter(this)
-        initListener()
+//        initListener()
         initView()
 
         binding.ibLogout.setOnClickListener {
@@ -82,6 +82,9 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         binding.tvEmail.setText(userResponse.email)
         binding.tvNotelp.setText(userResponse.notelp.toString())
         binding.tvAlamat.setText(userResponse.address.toString())
+//        Glide.with(requireContext())
+//            .load(userResponse.profile_photo_path)
+//            .into(binding.imageView9)
 
         binding.tvNama.isEnabled = false
         binding.tvEmail.isEnabled = false
@@ -180,52 +183,47 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
         }
     }
 
-    private fun initListener() {
-        binding.imageView9.setOnClickListener {
-            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
-
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Pilih Foto")
-            builder.setItems(options) { dialog, item ->
-                when {
-                    options[item] == "Ambil Foto" -> {
-                        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE)
-                    }
-                    options[item] == "Pilih dari Galeri" -> {
-                        val pickPhoto =
-                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK)
-                    }
-                    options[item] == "Batal" -> {
-                        dialog.dismiss()
-                    }
-                }
-            }
-            builder.show()
-        }
-    }
+//    private fun initListener() {
+//        binding.imageView9.setOnClickListener {
+//            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
+//
+//            val builder = AlertDialog.Builder(requireContext())
+//            builder.setTitle("Pilih Foto")
+//            builder.setItems(options) { dialog, item ->
+//                when {
+//                    options[item] == "Ambil Foto" -> {
+//                        ImagePicker.with(this)
+//                            .cameraOnly()
+//                            .start()
+//                    }
+//                    options[item] == "Pilih dari Galeri" -> {
+//                        ImagePicker.with(this)
+//                            .galleryOnly()
+//                            .compress(100)
+//                            .start()
+//                    }
+//                    options[item] == "Batal" -> {
+//                        dialog.dismiss()
+//                    }
+//                }
+//            }
+//            builder.show()
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
-            filePath = data?.data
-            Glide.with(this)
-                .load(filePath)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.imageView9)
-        }else if(requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK){
+        if( resultCode == Activity.RESULT_OK){
             filePath = data?.data
             Glide.with(this)
                 .load(filePath)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.imageView9)
         }
-
     }
 
     private fun navigateToSignInActivity() {
-        val intent = Intent(activity, SignInActivity::class.java)
+        val intent = Intent(activity, OnBoardScreenActivity::class.java)
         startActivity(intent)
         activity?.finish()
     }
@@ -238,7 +236,7 @@ class ProfileFragment : Fragment(), UpdateProfileContract.View {
     override fun onUpdateProfileSuccess(updateProfileResponse: UpdateProfileResponse, view: View) {
         Toast.makeText(context, "Sukses Update Profile", Toast.LENGTH_SHORT).show()
 
-        filePath?.let { presenter.submitPhotoRegister(it, view) }
+//        filePath?.let { presenter.submitPhotoRegister(it, view) }
     }
 
     override fun onRegisterPhotoSuccess(view: View) {

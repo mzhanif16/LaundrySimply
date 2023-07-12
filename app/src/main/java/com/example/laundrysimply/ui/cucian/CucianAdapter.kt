@@ -37,6 +37,8 @@ class CucianAdapter(
                     tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_cancelled)
                 }else if (data.statusTransaksi.equals("DELIVERED")){
                     tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status_delivered)
+                }else if (data.statusTransaksi.equals("ON DELIVERY")){
+                    tvStatusTransaksi.setBackgroundResource(R.drawable.shape_status)
                 }
 
                 itemView.setOnClickListener { itemAdapterCallback.onClick(it, data) }

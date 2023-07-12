@@ -19,6 +19,7 @@ import com.example.laundrysimply.databinding.ActivitySignUpBinding
 import com.example.laundrysimply.model.request.RegisterRequest
 import com.example.laundrysimply.model.response.login.LoginResponse
 import com.example.laundrysimply.ui.signin.SignInActivity
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
@@ -43,32 +44,30 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun initListener() {
-        binding.ivProfil.setOnClickListener {
-            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
-
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Pilih Foto")
-            builder.setItems(options) { dialog, item ->
-                when {
-                    options[item] == "Ambil Foto" -> {
-                        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        if (takePicture.resolveActivity(packageManager) != null) {
-                            startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE)
-                        } else {
-                            Toast.makeText(this, "Tidak ada aplikasi kamera", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    options[item] == "Pilih dari Galeri" -> {
-                        val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK)
-                    }
-                    options[item] == "Batal" -> {
-                        dialog.dismiss()
-                    }
-                }
-            }
-            builder.show()
-        }
+//        binding.ivProfil.setOnClickListener {
+//            val options = arrayOf<CharSequence>("Ambil Foto", "Pilih dari Galeri", "Batal")
+//
+//            val builder = AlertDialog.Builder(this)
+//            builder.setTitle("Pilih Foto")
+//            builder.setItems(options) { dialog, item ->
+//                when {
+//                    options[item] == "Ambil Foto" -> {
+//                        ImagePicker.with(this)
+//                            .cameraOnly()
+//                            .start()
+//                    }
+//                    options[item] == "Pilih dari Galeri" -> {
+//                        ImagePicker.with(this)
+//                            .galleryOnly()
+//                            .start()
+//                    }
+//                    options[item] == "Batal" -> {
+//                        dialog.dismiss()
+//                    }
+//                }
+//            }
+//            builder.show()
+//        }
 
         binding.btnDaftar.setOnClickListener {
             var fullname = binding.tvNama.text.toString()
@@ -107,8 +106,8 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
                 binding.tvNotelp.error = "Silahkan masukkan no telp !"
                 binding.tvNotelp.requestFocus()
             } else if (alamat.isNullOrEmpty()) {
-                binding.tvNotelp.error = "Silahkan masukkan alamat !"
-                binding.tvNotelp.requestFocus()
+                binding.tvAlamatuser.error = "Silahkan masukkan alamat !"
+                binding.tvAlamatuser.requestFocus()
             } else {
                 presenter.submitRegister(data, it)
             }
@@ -117,20 +116,12 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             filePath = data?.data
             Glide.with(this)
                 .load(filePath)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.ivProfil)
-        }else if(requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK ){
-            filePath = data?.data
-            Glide.with(this)
-                .load(filePath)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.ivProfil)
-        }else {
-            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -175,5 +166,9 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
+    }
+
+    fun onbackPressed(view: View) {
+        super.onBackPressed()
     }
 }

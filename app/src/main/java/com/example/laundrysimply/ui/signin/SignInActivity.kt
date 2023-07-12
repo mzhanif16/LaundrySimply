@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.laundrysimply.LaundrySimply
 import com.example.laundrysimply.MainActivity
@@ -27,13 +28,6 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
         setContentView(view)
         presenter = SigninPresenter(this)
 
-
-        if(!LaundrySimply.getApp().getToken().isNullOrEmpty()){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
         initView()
 
         binding.btnLogin.setOnClickListener {
@@ -51,10 +45,6 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
             }
 
         }
-        binding.btnDaftar.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onLoginSuccess(loginResponse: LoginResponse) {
@@ -69,12 +59,7 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
     }
 
     override fun onLoginFailed(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initDummy(){
-        binding.etEmail.setText("zakihanif177@gmail.com")
-        binding.etKatasandi.setText("hanif53gan")
+        Toast.makeText(this,"Email atau Password salah, silahkan coba lagi",Toast.LENGTH_SHORT).show()
     }
 
     private fun initView(){
@@ -93,5 +78,9 @@ class SignInActivity : AppCompatActivity(), SignContract.View {
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
+    }
+
+    fun back(view: View) {
+        super.onBackPressed()
     }
 }

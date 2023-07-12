@@ -3,6 +3,7 @@ package com.example.laundrysimply.ui.home
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,10 +59,10 @@ class HomeFragment : Fragment() , HomeContract.View{
         var user = LaundrySimply.getApp().getUser()
         var userResponse = Gson().fromJson(user,User::class.java)
         binding.tvNamauser.setText(userResponse.name)
-            Glide.with(requireActivity())
+            Glide.with(requireContext())
                 .load(R.drawable.logo)
                 .into(binding.imageView5)
-
+        Log.d("link",userResponse.profile_photo_url.replace("http:https:", "https:"))
     }
 
     override fun onDestroyView() {

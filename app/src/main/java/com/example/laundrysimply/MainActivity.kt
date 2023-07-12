@@ -1,6 +1,7 @@
 package com.example.laundrysimply
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val token = LaundrySimply.getApp().getToken()
         HttpClient.getInstance().buildRetrofitClient(token)
+        Log.d("token", token.toString())
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

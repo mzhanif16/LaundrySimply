@@ -48,7 +48,14 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
         binding.btnLanjut.setOnClickListener {
             val keterangan = binding.etKeterangan.text.toString()
             val nilaiRating = rating.rating
-            presenter2.Rating(transaksiId, nilaiRating, keterangan)
+            if(keterangan.isNullOrEmpty()){
+                binding.etKeterangan.error ="Silahkan masukkan keterangan"
+                binding.etKeterangan.requestFocus()
+            }else if(nilaiRating== 0.0f){
+                Toast.makeText(this,"Rating harus diisi",Toast.LENGTH_SHORT).show()
+            }else {
+                presenter2.Rating(transaksiId, nilaiRating, keterangan)
+            }
         }
 
         binding.btnCancel.setOnClickListener {
@@ -56,8 +63,16 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
             presenter2.Cancel(transaksiId,"CANCELLED")
         }
 
+        val ivback = binding.imageView4
+        ivback.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
     private fun initView() {
         progressDialog = Dialog(this)
         val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
@@ -73,7 +88,7 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
         val data = detailTransaksiResponse.layanan
         val listData = ArrayList<Layanan>(data)
 
-        binding.btnLanjut.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
+        binding.btnLanjut.visibility = if (detailTransaksiResponse.statusTransaksi == "DELIVERED") {
             View.VISIBLE
         } else {
             View.GONE
@@ -83,7 +98,7 @@ class DetailTransaksiActivity : AppCompatActivity(), DetailTransaksiContract.Vie
         }else {
             View.VISIBLE
         }
-        binding.cvRating.visibility = if (detailTransaksiResponse.statusBayar == "SUCCESS") {
+        binding.cvRating.visibility = if (detailTransaksiResponse.statusTransaksi == "DELIVERED") {
             View.VISIBLE
         } else {
             View.GONE

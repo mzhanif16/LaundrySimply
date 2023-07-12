@@ -46,6 +46,10 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
     private var tanggalDelivery: String = ""
     lateinit var presenter: PaymentPresenter
     var progressDialog : Dialog? = null
+
+    companion object {
+        private const val BROWSER_REQUEST_CODE = 1
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailCucianBinding.inflate(layoutInflater)
@@ -56,6 +60,11 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
         OneSignal.promptForPushNotifications();
+
+        val ivback = binding.imageView4
+        ivback.setOnClickListener {
+            onBackPressed()
+        }
 
         val bundle = intent.extras
         if (bundle != null) {
@@ -114,6 +123,19 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == BROWSER_REQUEST_CODE) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragment", "home")
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun initView(){
         progressDialog = Dialog(this)
         val dialogLayout = layoutInflater.inflate(R.layout.dialog_loader, null)
@@ -125,10 +147,6 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         }
     }
 
-    fun onbackPressed(view: View) {
-        super.onBackPressed()
-    }
-
     override fun onPaymentSuccess(checkOutResponse: CheckOutResponse1, view: View) {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setIcon(R.drawable.logo)
@@ -137,7 +155,7 @@ class DetailCucianActivity : AppCompatActivity(), PaymentContract.View {
         alertDialog.setPositiveButton("Ya") { dialog, which ->
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(checkOutResponse.paymentUrl)
-            startActivity(intent)
+            startActivityForResult(intent, BROWSER_REQUEST_CODE)
         }
         alertDialog.setNegativeButton("Tidak") { dialog, which ->
             // Intent ke Home Fragment
